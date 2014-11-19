@@ -1,0 +1,7 @@
+
+ALINOUS_HOME/html/*
+ALINOUS_HOME/preview/*
+ALINOUS_HOME/html_resource/*
+ALINOUS_HOME/html_tmpl/*
+ALINOUS_HOME/log/*
+ALINOUS_HOME/tmp/*

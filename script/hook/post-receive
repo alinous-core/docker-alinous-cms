@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cd /opt/work
+
+pwd
+
+git --git-dir=.git pull origin master
+
+

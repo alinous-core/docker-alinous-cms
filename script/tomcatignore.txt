@@ -1,0 +1,6 @@
+
+temp/*
+logs/*
+webapps/ROOT/*
+work/*
+

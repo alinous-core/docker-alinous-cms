@@ -1,0 +1,8 @@
+#!/bin/sh
+
+cd /usr/local/tomcat/
+
+pwd
+
+git --git-dir=.git pull origin master
+
