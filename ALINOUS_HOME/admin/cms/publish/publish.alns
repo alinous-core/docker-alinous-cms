@@ -18,9 +18,10 @@ function Publish.publishPage($cms_page_id)
 	$contextRoot = "";
 	for($i = 0; $i < $pages; $i++){
 		TopTmpl.sync($template_top_id, "");
-		Publish.doPublish($template_top_id, $cms_page_id, $fileExt, $contextRoot, $i);
+		Publish.doPublish($template_top_id, $cms_page_id, $fileExt, $contextRoot, $i, $pages);
 	}
 	
+	// Mobile
 	$template_top_id = Publish.getSecondaryTopTemplateId($cms_page_id);
 	if($template_top_id != null && $template_top_id != 0){
 		$pages = Publish.getPaging($template_top_id, $cms_page_id, $genCode);
@@ -35,7 +36,7 @@ function Publish.publishPage($cms_page_id)
 		$contextRoot = $cms_page[0].second_template_context;
 		for($i = 0; $i < $pages; $i++){
 			TopTmpl.sync($template_top_id, "");
-			Publish.doPublish($template_top_id, $cms_page_id, $fileExt, $contextRoot, $i);
+			Publish.doPublish($template_top_id, $cms_page_id, $fileExt, $contextRoot, $i, $pages);
 		}		
 	}
 	
@@ -63,7 +64,7 @@ function Publish.setDirty($cms_page_id, $context)
 	COMMIT;
 }
 
-function Publish.doPublish($template_top_id, $cms_page_id, $fileExt, $contextRoot, $page)
+function Publish.doPublish($template_top_id, $cms_page_id, $fileExt, $contextRoot, $page, $numPages)
 {
 	$module = Publish.getPublishPagePath($cms_page_id, $page, $contextRoot);
 	
@@ -98,6 +99,7 @@ function Publish.doPublish($template_top_id, $cms_page_id, $fileExt, $contextRoo
 	$params.cms_page_id = $cms_page[0].cms_page_id;
 	$params.node_id = $cms_page[0].node_id;
 	$params.page = $page;
+	$params.numPages = $numPages;
 	$params.publish = "publish-meta";
 	
 	Html.outputHtml($htmlPath, $metaFile, $params, false, "utf-8");
@@ -312,7 +314,7 @@ function Publish.getPublishPageUrlPath($cms_page_id)
 	
 	$path =  Publish.removeSiteSection($cms_page[0].page_path);
 	
-	if($cms_page[0].page_children > 0 || $cms_page[0].force_folder > 0){
+	if($cms_page[0].page_children > 0 || $cms_page[0].force_folder == 1){
 		$fileName = $path + "/index.html";
 	}else{
 		$fileName = $path + ".html";

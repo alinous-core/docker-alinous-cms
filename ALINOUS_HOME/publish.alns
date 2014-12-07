@@ -75,6 +75,9 @@ WHERE
 	tree_model.page_path = $path;
 
 if(Array.size(@tree_model) == 0){
+	// retry for pc's mobile page access
+	
+	
 	return 0;
 }
 
@@ -169,5 +172,8 @@ function lazyPublish($cms_page, $path, $page, $useContext)
 	
 	TopTmpl.sync($template_top_id, "");
 	
-	Publish.doPublish($template_top_id, $cms_page.cms_page_id, $fileExt, $contextRoot, $page);
+	$genCode = "";
+	$numPages = Publish.getPaging($template_top_id, $cms_page.cms_page_id, $genCode);
+	
+	Publish.doPublish($template_top_id, $cms_page.cms_page_id, $fileExt, $contextRoot, $page, $numPages);
 }
